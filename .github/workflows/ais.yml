@@ -1,7 +1,7 @@
 name: Update Quantum AIS position
 on:
   schedule:
-    - cron: '17 * * * *'
+    - cron: '17,47 * * * *'
   workflow_dispatch:
 permissions:
   contents: write
@@ -27,6 +27,9 @@ jobs:
         env:
           MYSHIPTRACKING_API_KEY: ${{ secrets.MYSHIPTRACKING_API_KEY }}
         run: python scripts/myshiptracking_fallback.py
+      - name: Check authorised CruiseMapper public AIS position
+        if: always()
+        run: python scripts/cruisemapper_position.py
       - name: Commit only new verified reports
         run: |
           if [ -f ship-position.json ] && ! git diff --quiet -- ship-position.json; then
