@@ -120,7 +120,7 @@ def main():
                     OUT.write_text(json.dumps(old, indent=2) + "\n")
                     print("Filled missing speed without changing newer ship position:", old["speedKnots"])
                     return
-                if same_place and time_gap <= 3600 and result.get("destination") and not old.get("destination"):
+                if same_place and old.get("source", "").startswith("CruiseMapper") and result.get("destination") and old.get("destination") != result["destination"]:
                     old["destination"] = result["destination"]
                     old["destinationCode"] = result["destinationCode"]
                     OUT.write_text(json.dumps(old, indent=2) + "\n")
