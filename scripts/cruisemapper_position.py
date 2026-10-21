@@ -40,6 +40,10 @@ def extract(page, fetched_at):
     parser = Text()
     parser.feed(page)
     readable = re.sub(r"\s+", " ", unescape(" ".join(parser.parts)))
+    speed_match = re.search(r"cruising\s+at\s+(?:a\s+)?speed\s+of\s+(\d{1,2}(?:\.\d+)?)\s*(?:kn|knots?)\b", readable, re.I)
+    speed_knots = float(speed_match.group(1)) if speed_match else None
+    if speed_knots is not None and not (0 <= speed_knots <= 45):
+        speed_knots = None
     # Require the explicit AIS age text. Never use page-fetch time as report time.
     age = re.search(
         r"AIS\s+position\s+was\s+last\s+reported\s+"
@@ -61,7 +65,7 @@ def extract(page, fetched_at):
         "mmsi": MMSI,
         "lat": lat,
         "lon": lon,
-        "speedKnots": None,
+        "speedKnots": speed_knots,
         "courseDegrees": None,
         "reportedAt": observed.isoformat(timespec="seconds").replace("+00:00", "Z"),
         "source": "CruiseMapper (AIS; approximate timestamp)",
