@@ -1,0 +1,41 @@
+name: Update Quantum AIS position
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: quantum-ais-update
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install 'websockets>=13,<16'
+      - name: Listen for real AIS reports
+        env:
+          AISSTREAM_API_KEY: ${{ secrets.AISSTREAM_API_KEY }}
+        run: python scripts/ais_receiver.py
+      - name: Commit only new verified reports
+        run: |
+          if [ -f ship-position.json ] && ! git diff --quiet -- ship-position.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add ship-position.json
+            git commit -m "Update verified Quantum AIS position"
+            git push
+          elif [ -f ship-position.json ] && [ -z "$(git ls-files ship-position.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add ship-position.json
+            git commit -m "Record first verified Quantum AIS position"
+            git push
+          else
+            echo "No new position."
+          fi
