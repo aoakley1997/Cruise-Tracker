@@ -100,6 +100,21 @@ def main():
                         result["lastKnown" + field[0].upper() + field[1:]] = old["lastKnown" + field[0].upper() + field[1:]]
                         result["lastKnownMotionAt"] = old.get("lastKnownMotionAt")
             if old.get("mmsi") == MMSI and old.get("reportedAt", "") >= result["reportedAt"]:
+                # Keep the newer location intact. Only fill missing motion readings
+                # when they refer to the same reported coordinates and are recent.
+                same_place = abs(float(old.get("lat", 999)) - result["lat"]) < 0.00001 and abs(float(old.get("lon", 999)) - result["lon"]) < 0.00001
+                try:
+                    old_dt = datetime.fromisoformat(old["reportedAt"].replace("Z", "+00:00"))
+                    time_gap = abs((old_dt - datetime.fromisoformat(result["reportedAt"].replace("Z", "+00:00"))).total_seconds())
+                except (ValueError, KeyError, TypeError):
+                    time_gap = float("inf")
+                if same_place and time_gap <= 3600 and old.get("speedKnots") is None and result["speedKnots"] is not None:
+                    old["speedKnots"] = result["speedKnots"]
+                    old["speedSource"] = "CruiseMapper (AIS; approximate)"
+                    old["speedReportedAt"] = result["reportedAt"]
+                    OUT.write_text(json.dumps(old, indent=2) + "\\n")
+                    print("Filled missing speed without changing newer ship position:", old["speedKnots"])
+                    return
                 print("Existing AIS position is newer; keeping it.")
                 return
         except (OSError, ValueError):
