@@ -112,7 +112,7 @@ def main():
                     old["speedKnots"] = result["speedKnots"]
                     old["speedSource"] = "CruiseMapper (AIS; approximate)"
                     old["speedReportedAt"] = result["reportedAt"]
-                    OUT.write_text(json.dumps(old, indent=2) + "\\n")
+                    OUT.write_text(json.dumps(old, indent=2) + "\n")
                     print("Filled missing speed without changing newer ship position:", old["speedKnots"])
                     return
                 print("Existing AIS position is newer; keeping it.")
