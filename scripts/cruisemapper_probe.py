@@ -52,4 +52,17 @@ for pattern in time_patterns:
         excerpt = re.sub(r"[\\r\\n\\t]+", " ", excerpt)
         print("Time candidate:", excerpt[:230])
 
+
+print("Speed and course diagnostics:")
+for pattern in [
+    r"(?i)(?:speed|knots?|\\bkn\\b|km/h|course|heading|rotation)[^<>\\n]{0,100}",
+    r"(?i)\\b\\d{1,2}(?:\\.\\d+)?\\s*(?:kn|knots|km/h)\\b",
+]:
+    matches = list(re.finditer(pattern, html))
+    print("Motion matches:", len(matches))
+    for match in matches[:15]:
+        excerpt = unescape(html[max(0, match.start()-65):match.end()+65])
+        excerpt = re.sub(r"[\\r\\n\\t]+", " ", excerpt)
+        print("Motion candidate:", excerpt[:230])
+
 print("Diagnostic complete. No map data modified.")
