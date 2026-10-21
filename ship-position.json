@@ -2,8 +2,10 @@
   "mmsi": 311000267,
   "lat": -26.84122,
   "lon": 157.201,
-  "speedKnots": null,
+  "speedKnots": 18.5,
   "courseDegrees": null,
   "reportedAt": "2026-10-21T03:43:26Z",
-  "source": "CruiseMapper (AIS; approximate timestamp)"
+  "source": "CruiseMapper (AIS; approximate timestamp)",
+  "speedSource": "CruiseMapper (AIS; approximate)",
+  "speedReportedAt": "2026-10-21T03:38:45Z"
 }
