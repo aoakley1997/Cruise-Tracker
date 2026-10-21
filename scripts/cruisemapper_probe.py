@@ -36,4 +36,20 @@ for pattern in patterns:
         excerpt = unescape(html[max(0, match.start()-75):match.end()+75])
         excerpt = re.sub(r"[\r\n\t]+", " ", excerpt)
         print("Candidate:", excerpt[:230])
+
+# Examine timestamp labels in the same page; never treat the fetch time as AIS time.
+print("Timestamp diagnostics:")
+time_patterns = [
+    r'(?i)(?:last\\s+reported|last\\s+updated|last\\s+seen|received|reported|updated|position\\s+time|ais\\s+time)[^<>\\n]{0,110}',
+    r'\\b20\\d{2}-\\d{2}-\\d{2}[T ]\\d{2}:\\d{2}(?::\\d{2})?(?:Z|[+-]\\d{2}:?\\d{2})?',
+    r'(?i)(?:timestamp|lastUpdate|lastPosition|positionDate|updatedAt|reportedAt)["\\']?\\s*[:=]\\s*["\\']?[^,}<>]{1,90}',
+]
+for pattern in time_patterns:
+    matches = list(re.finditer(pattern, html))
+    print("Timestamp pattern matches:", len(matches))
+    for match in matches[:12]:
+        excerpt = unescape(html[max(0, match.start()-55):match.end()+55])
+        excerpt = re.sub(r"[\\r\\n\\t]+", " ", excerpt)
+        print("Time candidate:", excerpt[:230])
+
 print("Diagnostic complete. No map data modified.")
