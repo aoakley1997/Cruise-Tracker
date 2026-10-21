@@ -86,6 +86,15 @@ def main():
     if OUT.exists():
         try:
             old = json.loads(OUT.read_text())
+            if old.get("mmsi") == MMSI:
+                for field in ("speedKnots", "courseDegrees"):
+                    value = old.get(field)
+                    if isinstance(value, (int, float)) and not isinstance(value, bool):
+                        result["lastKnown" + field[0].upper() + field[1:]] = value
+                        result["lastKnownMotionAt"] = old.get("reportedAt")
+                    elif old.get("lastKnown" + field[0].upper() + field[1:]) is not None:
+                        result["lastKnown" + field[0].upper() + field[1:]] = old["lastKnown" + field[0].upper() + field[1:]]
+                        result["lastKnownMotionAt"] = old.get("lastKnownMotionAt")
             if old.get("mmsi") == MMSI and old.get("reportedAt", "") >= result["reportedAt"]:
                 print("Existing AIS position is newer; keeping it.")
                 return
