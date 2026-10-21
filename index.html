@@ -219,7 +219,7 @@ main{padding:12px 12px 44px!important}
  <text x="182" y="319" font-size="35">🚢</text><text x="195" y="115" font-size="35">🐒</text>
  </svg>
  <div class="story-detail" id="storyDetail" aria-live="polite"><strong>🐒 Norman says: Welcome aboard!</strong><p>Pick a place on the map! I'll tell you a cool fact about where the family is going.</p></div>
- <p class="smallprint">✨ This is a make-believe picture of our planned journey, not the ship's real GPS position. The real position map is below.</p>
+
  </section><section class="card tracker-card">
 
 
@@ -321,7 +321,7 @@ async function refreshAIS(){
   if(Number(p.mmsi)!==311000267||!Number.isFinite(p.lat)||!Number.isFinite(p.lon)||!Number.isFinite(age)||age < -300000)throw Error('Invalid report');
   lastAIS=p;
   drawShip(p);$('shipSpeed').textContent=Number.isFinite(p.speedKnots)?p.speedKnots+' knots':'Not reported';$('shipCourse').textContent=p.destination||'Not reported';$('shipTime').textContent=new Date(p.reportedAt).toLocaleString('en-AU',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'});
-  $('mapStatus').textContent='📍 Last spotted here (not live) · '+new Date(p.reportedAt).toLocaleString('en-AU',{timeZone:'Australia/Brisbane',day:'numeric',month:'short',hour:'numeric',minute:'2-digit'})+' Brisbane time · '+p.source+' · '+Math.round(age/3600000)+' hours old. This is where the ship was last seen, not necessarily where it is right now.';
+  $('mapStatus').textContent='📍 Last spotted here at '+new Date(p.reportedAt).toLocaleString('en-AU',{timeZone:'Australia/Brisbane',day:'numeric',month:'short',hour:'numeric',minute:'2-digit'})+' (Brisbane time).';
   updateWeather();
  }catch(e){lastAIS=null;$('mapStatus').textContent='Planned route only · no verified AIS position available yet.';$('shipSpeed').textContent='Awaiting AIS';$('shipCourse').textContent='—';$('shipTime').textContent='Not received';}
 }
