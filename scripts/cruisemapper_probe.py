@@ -40,9 +40,9 @@ for pattern in patterns:
 # Examine timestamp labels in the same page; never treat the fetch time as AIS time.
 print("Timestamp diagnostics:")
 time_patterns = [
-    r'(?i)(?:last\\s+reported|last\\s+updated|last\\s+seen|received|reported|updated|position\\s+time|ais\\s+time)[^<>\\n]{0,110}',
-    r'\\b20\\d{2}-\\d{2}-\\d{2}[T ]\\d{2}:\\d{2}(?::\\d{2})?(?:Z|[+-]\\d{2}:?\\d{2})?',
-    r'(?i)(?:timestamp|lastUpdate|lastPosition|positionDate|updatedAt|reportedAt)["\\']?\\s*[:=]\\s*["\\']?[^,}<>]{1,90}',
+    r"(?i)(?:last\\s+reported|last\\s+updated|last\\s+seen|received|reported|updated|position\\s+time|ais\\s+time)[^<>\\n]{0,110}",
+    r"\\b20\\d{2}-\\d{2}-\\d{2}[T ]\\d{2}:\\d{2}(?::\\d{2})?(?:Z|[+-]\\d{2}:?\\d{2})?",
+    r"(?i)(?:timestamp|lastUpdate|lastPosition|positionDate|updatedAt|reportedAt)[\\\"']?\\s*[:=]\\s*[\\\"']?[^,}<>]{1,90}",
 ]
 for pattern in time_patterns:
     matches = list(re.finditer(pattern, html))
