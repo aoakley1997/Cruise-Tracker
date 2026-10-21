@@ -385,6 +385,7 @@ onAuthStateChanged(auth,user=>{try{if(unsubMessages)unsubMessages();stopChaos?.(
   }else{
     replyUnsubs.push(onSnapshot(replyRef,snap=>{replyText.textContent=snap.exists()?String(snap.data().text||''):'No reply yet 💙';},err=>{replyText.textContent='Replies unavailable. Check Firebase rules.';console.error(err);}));
   }
+  const familyReaction=document.createElement('div');familyReaction.style.cssText='margin-top:10px;font-size:14px;font-weight:650;color:#28546b';familyReaction.textContent='Family reaction: not yet 💙';replyBox.append(familyReaction);replyUnsubs.push(onSnapshot(doc(db,'postcardReplyReactions',item.id),snap=>{const emoji=snap.exists()?snap.data().emoji:null;familyReaction.textContent=emoji?'Family reaction: '+emoji:'Family reaction: not yet 💙';},err=>{familyReaction.textContent='Family reaction unavailable';console.error('Family reply reaction:',err);}));
   wrap.append(replyBox);
   }
   el.append(wrap);
