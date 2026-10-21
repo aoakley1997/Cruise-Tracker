@@ -52,6 +52,8 @@ async def run():
     if not key:
         raise SystemExit("AISSTREAM_API_KEY secret not configured")
     newest = None
+    received = 0
+    rejected = {}
     if OUTPUT.exists():
         try:
             existing = json.loads(OUTPUT.read_text())
@@ -61,12 +63,20 @@ async def run():
             pass
     try:
         async with websockets.connect(URL, open_timeout=20, ping_interval=20) as ws:
-            await ws.send(json.dumps({"APIKey": key, "BoundingBoxes": [[[-90, -180], [90, 180]]], "FiltersShipMMSI": [str(MMSI)]}))
+            await ws.send(json.dumps({"APIKey": key, "BoundingBoxes": [[[-45, 145], [-5, 180]]], "FiltersShipMMSI": [str(MMSI)]}))
+            print("AIS WebSocket connected; subscribed to Quantum in southwest Pacific.", flush=True)
             deadline = asyncio.get_running_loop().time() + 215
             while asyncio.get_running_loop().time() < deadline:
                 try:
                     raw = await asyncio.wait_for(ws.recv(), timeout=min(25, max(1, deadline - asyncio.get_running_loop().time())))
-                    p = parse_report(json.loads(raw))
+                    received += 1
+                    message = json.loads(raw)
+                    p = parse_report(message)
+                    if not p:
+                        kind = str(message.get("MessageType", "unknown"))
+                        rejected[kind] = rejected.get(kind, 0) + 1
+                        if received <= 3:
+                            print("AIS message type:", kind, "MMSI:", (message.get("MetaData") or {}).get("MMSI"), "timestamp present:", bool((message.get("MetaData") or {}).get("time_utc")), flush=True)
                     if p and (newest is None or p["reportedAt"] > newest.get("reportedAt", "")):
                         newest = p
                         OUTPUT.write_text(json.dumps(newest, indent=2) + "\n")
@@ -75,6 +85,7 @@ async def run():
                     continue
     except Exception as exc:
         print("AIS stream unavailable:", type(exc).__name__, str(exc)[:180])
+    print("AIS messages received:", received, "unaccepted types:", rejected, flush=True)
     if newest is None:
         print("No verified AIS report available; no file created.")
     else:
