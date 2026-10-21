@@ -1,0 +1,17 @@
+name: Diagnose GitHub schedule
+on:
+  schedule:
+    - cron: '11,26,41,56 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Print trigger and UTC timestamp
+        run: |
+          echo "Triggered by: ${{ github.event_name }}"
+          date -u '+UTC time: %Y-%m-%d %H:%M:%S'
+          echo "Branch: ${{ github.ref }}"
