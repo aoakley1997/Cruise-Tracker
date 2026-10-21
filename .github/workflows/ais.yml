@@ -1,7 +1,7 @@
 name: Update Quantum AIS position
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '17 * * * *'
   workflow_dispatch:
 permissions:
   contents: write
