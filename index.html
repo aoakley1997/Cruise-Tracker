@@ -226,7 +226,7 @@ main{padding:12px 12px 44px!important}
 <div class="section-kicker">LET'S EXPLORE</div><h2>🗺️ Where is our ship?</h2><p class="muted">Follow our big adventure across the ocean! The map shows where the ship was last spotted.</p><div class="route-first" id="routePanel">
 <p class="muted status">Our holiday stops are Brisbane, Port Vila, Mystery Island and Nouméa. 🚢</p>
 <div class="map" id="map"></div><p class="status muted" id="mapStatus"></p>
-</div><div class="ship-facts" aria-live="polite"><div><small>🚢 Quantum of the Seas</small><strong id="shipSpeed">Awaiting AIS</strong><span>Speed</span></div><div><small>🧭 Direction</small><strong id="shipCourse">—</strong><span>Course</span></div><div><small>📡 Latest report</small><strong id="shipTime">Not received</strong><span>Updates depend on AIS coverage</span></div></div><p class="muted status">Live vessel reports are provided by AISStream when available. <a href="https://www.myshiptracking.com/vessels/quantum-of-the-seas-mmsi-311000267-imo-9549463" target="_blank" rel="noopener noreferrer">View external ship tracker ↗</a></p></section><section class="card"><div class="section-kicker">SUNSHINE OR SHOWERS?</div><h2>☀️ Is it sunny at sea?</h2><div id="weather">Loading weather…</div><p class="muted status" id="weatherStatus">Forecasts use the selected port or next destination, not weather at the ship's exact position.</p></section><section class="card"><div class="section-kicker">OUR ADVENTURE DAYS</div><h2>🏝️ What's happening each day?</h2><div id="itinerary"></div></section><section class="card postcards"><div class="section-kicker">SPECIAL MAIL FOR YOU</div><h2>💌 Messages just for you!</h2><p class="muted">Look! Your family has sent you little notes from their big adventure. 💙</p><div class="kid-intro"><span class="emoji" aria-hidden="true">💌</span><p>Ahoy, explorer! Check here for new stories from your family. Every message is a little hello from the sea!</p></div><div id="messages" aria-live="polite">Looking for new postcards…</div></section><section class="card wide hidden" id="admin"><h2>✉️ Send a family update</h2><p class="muted">Adults only. New updates appear on your niece's iPad when she's online.</p><form id="postForm"><label for="sender">Who is this from?</label><select id="sender" required><option value="Utsy">🐒 Utsy</option><option value="Nana">💗 Nana</option><option value="Poppa">⚓ Poppa</option></select><label for="messageText">Postcard message</label><textarea id="messageText" maxlength="1500" placeholder="Hello from the ship!" required rows="4"></textarea><label for="postImage">Add a photo (optional)</label><input id="postImage" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif,image/*"/><p class="muted status">Photos are shrunk to a small postcard size to keep this free. Choose a photo or leave it blank.</p><div id="photoPreview"></div><button id="postButton" type="submit">Send postcard 💌</button><button id="cancelEdit" type="button" class="hidden">Cancel editing</button><p id="postStatus" role="status"></p></form></section></div></section></main><footer>Made with love for our family 💙 · Weather and location data may be delayed.</footer><script type="module">
+</div><div class="ship-facts" aria-live="polite"><div><small>🚢 Quantum of the Seas</small><strong id="shipSpeed">Awaiting AIS</strong><span>Speed</span></div><div><small>🧭 Direction</small><strong id="shipCourse">—</strong><span>Course</span></div><div><small>📡 Latest report</small><strong id="shipTime">Not received</strong><span>Updates depend on AIS coverage</span></div></div><p class="muted status">Live vessel reports are provided by AISStream when available. <a href="https://www.myshiptracking.com/vessels/quantum-of-the-seas-mmsi-311000267-imo-9549463" target="_blank" rel="noopener noreferrer">View external ship tracker ↗</a></p></section><section class="card"><div class="section-kicker">SUNSHINE OR SHOWERS?</div><h2>☀️ Is it sunny at sea?</h2><div id="weather">Loading weather…</div><p class="muted status" id="weatherStatus">Forecasts use the selected port or next destination, not weather at the ship's exact position.</p></section><section class="card"><div class="section-kicker">OUR ADVENTURE DAYS</div><h2>🏝️ What's happening each day?</h2><div id="itinerary"></div></section><section class="card postcards"><div class="section-kicker">SPECIAL MAIL FOR YOU</div><h2>💌 Messages just for you!</h2><p class="muted">Look! Your family has sent you little notes from their big adventure. 💙</p><div class="kid-intro"><span class="emoji" aria-hidden="true">💌</span><p>Ahoy, explorer! Check here for new stories from your family. Every message is a little hello from the sea!</p></div><div id="messages" aria-live="polite">Looking for new postcards…</div></section><section class="card wide hidden" id="admin"><h2>✉️ Send a family update</h2><p class="muted">Adults only. New updates appear on your niece's iPad when she's online.</p><form id="postForm"><label for="sender">Who is this from?</label><select id="sender" required><option value="Utsy">🐒 Utsy</option><option value="Nana">💗 Nana</option><option value="Poppa">⚓ Poppa</option></select><label for="messageText">Postcard message</label><textarea id="messageText" maxlength="1500" placeholder="Hello from the ship!" required rows="4"></textarea><button id="postButton" type="submit">Send postcard 💌</button><button id="cancelEdit" type="button" class="hidden">Cancel editing</button><p id="postStatus" role="status"></p></form></section></div></section></main><footer>Made with love for our family 💙 · Weather and location data may be delayed.</footer><script type="module">
 // Replace these values with your NEW Firebase project's web app configuration.
 const firebaseConfig={apiKey:"AIzaSyCKpB2-75LgMqoIF2l3zhwCOu9i7svgEnY",authDomain:"family-cruise-3b85b.firebaseapp.com",projectId:"family-cruise-3b85b",storageBucket:"family-cruise-3b85b.firebasestorage.app",messagingSenderId:"786145930598",appId:"1:786145930598:web:72f835de393ca2cb47eca7"};
 const ADULT_UIDS=["mim5JdqJnjO4WjYyDKFbooPfQbV2"]; // Must match firestore.rules and storage.rules.
@@ -242,6 +242,17 @@ const SAILING=[
 {date:'2026-10-30',name:'Brisbane',detail:'Arrival · 6:30 am',lat:-27.47,lon:153.03}];
 const $=id=>document.getElementById(id);const localDate=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Australia/Brisbane',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());const fmt=d=>new Date(d+'T12:00:00+10:00').toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short',timeZone:'Australia/Brisbane'});const safe=t=>String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let unsubMessages,weatherTimer,currentUser;
+const DAILY_FACTS=[
+['2026-10-22','🚢 Setting sail','Quantum of the Seas is like a floating town, with restaurants, theatres and swimming pools!'],
+['2026-10-23','🌊 Coral Sea','The Coral Sea is home to sea turtles, reef sharks and colourful fish!'],
+['2026-10-24','🐬 Dolphins','Dolphins breathe air, just like people, so they have to come up to the surface!'],
+['2026-10-25','🌺 Port Vila','Vanuatu has about 80 islands. Imagine visiting every one!'],
+['2026-10-26','🏝️ Mystery Island','Nobody lives permanently on Mystery Island, also called Inyeug!'],
+['2026-10-27','🐢 Nouméa','New Caledonia has enormous lagoons where sea turtles live!'],
+['2026-10-28','⭐ Stars at sea','Away from bright city lights, the stars can look extra bright at sea!'],
+['2026-10-29','🐋 Ocean giants','Blue whales are the biggest animals known to have lived on Earth!'],
+['2026-10-30','🏡 Welcome home','Brisbane’s Story Bridge was named after John Douglas Story!']
+];
 const STORY_FACTS={
  brisbane:{title:'🐨 Brisbane, Australia',fact:'Brisbane is home to the Story Bridge, which is named after a real person — John Douglas Story! This is where our ship adventure begins and ends.'},
  vila:{title:'🌺 Port Vila, Vanuatu',fact:'Vanuatu is made up of around 80 islands! People speak lots of languages there, including Bislama, English and French.'},
@@ -256,7 +267,7 @@ function initStoryMap(){
  });
  const now=localDate(),name=SAILING.find(x=>x.date===now)?.name||'';
  const key=name.includes('Port Vila')?'vila':name.includes('Mystery')?'mystery':name.includes('Nouméa')?'noumea':'brisbane';
- const f=STORY_FACTS[key];$('storyDetail').innerHTML='<strong>🐒 Norman’s fact of the day: '+f.title+'</strong><p>'+f.fact+'</p>';
+ const today=DAILY_FACTS.find(x=>x[0]===now);const f=STORY_FACTS[key];$('storyDetail').innerHTML='<strong>🐒 Norman’s fact of the day: '+(today?today[1]:f.title)+'</strong><p>'+(today?today[2]:f.fact)+'</p>';
 }
 function renderSchedule(){let now=localDate(),i=SAILING.findIndex(d=>d.date===now);if(i<0)i=now<SAILING[0].date?0:SAILING.length-1;const d=SAILING[i];$('dayPill').textContent=now<SAILING[0].date?'🌟 Almost time to sail!':now>SAILING.at(-1).date?'🏡 Home again!':`🚢 Adventure day ${i+1}`;$('heroTitle').textContent=d.name;$('heroText').textContent=`${fmt(d.date)} · ${d.detail}`;const end=new Date('2026-10-30T06:30:00+10:00'),days=Math.max(0,Math.ceil((end-Date.now())/86400000));$('countdown').textContent=days?`${days} more sleep${days===1?'':'s'} until the family is home! 💙`:'Welcome home! 💙';$('itinerary').innerHTML=SAILING.map(x=>`<div class="day ${x.date===now?'today':''}"><strong>${safe(fmt(x.date))} — ${safe(x.name)}</strong><div class="muted">${safe(x.detail)}</div></div>`).join('');return d}
 function initMap(){
@@ -313,33 +324,7 @@ const weatherCode=c=>c===0?'☀️ Clear':c<=3?'⛅ Partly cloudy':c<=48?'🌫�
 async function updateWeather(){const today=localDate();let idx=SAILING.findIndex(d=>d.date===today);if(idx<0)idx=today<SAILING[0].date?0:SAILING.length-1;let dest=SAILING[idx];if(lastAIS&&Date.now()-Date.parse(lastAIS.reportedAt)>=-300000&&Date.now()-Date.parse(lastAIS.reportedAt)<6*3600000)dest={name:'near ship (recent AIS coordinates)',lat:lastAIS.lat,lon:lastAIS.lon};if(dest.lat===null)dest=SAILING.slice(idx+1).find(x=>x.lat!==null)||SAILING.slice(0,idx).reverse().find(x=>x.lat!==null);if(!dest)return;try{const url=`https://api.open-meteo.com/v1/forecast?latitude=${dest.lat}&longitude=${dest.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&timezone=auto`;const res=await fetch(url);if(!res.ok)throw Error('Weather unavailable');const data=await res.json(),w=data.current;$('weather').innerHTML=`<div class="pill">${safe(dest.name)}</div><h2 style="font-size:36px;margin:12px 0">${Math.round(w.temperature_2m)}°C</h2><p>${weatherCode(w.weather_code)}</p><p>Feels like ${Math.round(w.apparent_temperature)}°C · Wind ${Math.round(w.wind_speed_10m)} km/h · Humidity ${w.relative_humidity_2m}%</p>`;$('weatherStatus').textContent=`Weather for ${dest.name}${dest.name.startsWith('near ship')?' (estimated conditions near the ship, not onboard sensor readings)':' (port-area weather, NOT onboard weather)'}. Updated by provider: ${w.time} (${data.timezone_abbreviation||data.timezone}).`;}catch(e){$('weather').textContent='Weather is temporarily unavailable. Try again when connected.';}}
 async function boot(){if(firebaseConfig.apiKey==='REPLACE_ME'){$('loginError').textContent='Setup needed: add your Firebase web app configuration to index.html.';return;}const [{initializeApp},{getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut},{getFirestore,collection,query,orderBy,limit,onSnapshot,addDoc,updateDoc,serverTimestamp,doc,setDoc}]=await Promise.all([import('https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js'),import('https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js'),import('https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js')]);const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 $('loginForm').onsubmit=async e=>{e.preventDefault();$('loginError').textContent='';try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value)}catch(err){$('loginError').textContent='Could not sign in. Check the email and password.'}};$('logout').onclick=()=>signOut(auth);
-onAuthStateChanged(auth,user=>{if(unsubMessages)unsubMessages();if(weatherTimer)clearInterval(weatherTimer);currentUser=user;$('login').classList.toggle('hidden',!!user);$('app').classList.toggle('hidden',!user);$('topNav').classList.toggle('hidden',!user);if(!user)return;const adult=ADULT_UIDS.includes(user.uid);$('admin').classList.toggle('hidden',!adult);renderSchedule();initStoryMap();initMap();refreshAIS();updateWeather();weatherTimer=setInterval(()=>{renderSchedule();refreshAIS();updateWeather()},5*60*1000);let editingPostcard=null;
-let retainedPhoto="";
-function resetPostcardEditor(){
- editingPostcard=null;retainedPhoto="";$('postForm').reset();$('postButton').textContent='Send postcard 💌';$('cancelEdit').classList.add('hidden');$('photoPreview').replaceChildren();$('postImage').value='';
-}
-$('cancelEdit').onclick=()=>{resetPostcardEditor();$('postStatus').textContent='Editing cancelled.';};
-$('postImage').onchange=()=>{
- const f=$('postImage').files?.[0];const preview=$('photoPreview');preview.replaceChildren();
- if(f){const info=document.createElement('p');info.textContent='Selected: '+f.name+' (will be resized when you save)';preview.append(info);}
- else if(retainedPhoto){const img=document.createElement('img');img.src=retainedPhoto;img.alt='Current postcard photo';preview.append(img);}
-};
-async function compressPostcardPhoto(file){
- if(!file)return retainedPhoto||'';
- if(file.size>20*1024*1024)throw Error('Please choose a photo smaller than 20 MB.');
- const bitmap=await createImageBitmap(file).catch(()=>null);
- let image=bitmap;
- if(!image){
-  image=await new Promise((resolve,reject)=>{const img=new Image();const url=URL.createObjectURL(file);img.onload=()=>{URL.revokeObjectURL(url);resolve(img)};img.onerror=()=>{URL.revokeObjectURL(url);reject(Error('Could not read that photo. Please choose a JPEG or PNG.'))};img.src=url;});
- }
- const canvas=document.createElement('canvas');const scale=Math.min(1,900/image.width,900/image.height);canvas.width=Math.max(1,Math.round(image.width*scale));canvas.height=Math.max(1,Math.round(image.height*scale));
- const ctx=canvas.getContext('2d');ctx.drawImage(image,0,0,canvas.width,canvas.height);if(bitmap)bitmap.close();
- let output='';
- for(const quality of [.7,.55,.4,.3]){output=canvas.toDataURL('image/jpeg',quality);if(output.length<150000)break;}
- if(output.length>=150000)throw Error('This photo is still too large. Please choose a smaller picture.');
- return output;
-}
-unsubMessages=onSnapshot(query(collection(db,'messages'),orderBy('createdAt','desc'),limit(50)),snap=>{
+onAuthStateChanged(auth,user=>{if(unsubMessages)unsubMessages();if(weatherTimer)clearInterval(weatherTimer);currentUser=user;$('login').classList.toggle('hidden',!!user);$('app').classList.toggle('hidden',!user);$('topNav').classList.toggle('hidden',!user);if(!user)return;const adult=ADULT_UIDS.includes(user.uid);$('admin').classList.toggle('hidden',!adult);renderSchedule();initStoryMap();initMap();refreshAIS();updateWeather();weatherTimer=setInterval(()=>{renderSchedule();refreshAIS();updateWeather()},5*60*1000);unsubMessages=onSnapshot(query(collection(db,'messages'),orderBy('createdAt','desc'),limit(50)),snap=>{
  const el=$('messages');el.replaceChildren();
  if(snap.empty){el.textContent='No postcards yet! Keep checking — your family will write soon. 💌';return;}
  snap.forEach(item=>{
@@ -347,43 +332,22 @@ unsubMessages=onSnapshot(query(collection(db,'messages'),orderBy('createdAt','de
   const title=document.createElement('strong');title.textContent='💌 From '+(m.sender||'Family');wrap.append(title);
   const date=document.createElement('small');date.style.display='block';date.textContent=m.createdAt?.toDate?.().toLocaleString('en-AU')||'Just sent';wrap.append(date);
   const p=document.createElement('p');p.textContent=m.text||'';wrap.append(p);
-  if(m.photoURL&&typeof m.photoURL==='string'&&(m.photoURL.startsWith('data:image/jpeg;base64,')||m.photoURL.startsWith('https://'))){
-   const img=document.createElement('img');img.className='postcard-image';img.src=m.photoURL;img.alt='Photo attached to this family postcard';img.loading='lazy';img.referrerPolicy='no-referrer';wrap.append(img);
-  }
-  if(ADULT_UIDS.includes(currentUser?.uid)){
-   const actions=document.createElement('div');actions.className='postcard-actions';
-   const edit=document.createElement('button');edit.type='button';edit.textContent='✏️ Edit postcard';
-   edit.onclick=()=>{
-    editingPostcard=item.id;retainedPhoto=m.photoURL||'';$('sender').value=['Utsy','Nana','Poppa'].includes(m.sender)?m.sender:'Utsy';$('messageText').value=m.text||'';$('postImage').value='';
-    $('photoPreview').replaceChildren();
-    if(retainedPhoto){const img=document.createElement('img');img.src=retainedPhoto;img.alt='Current postcard photo';$('photoPreview').append(img);}
-    $('postButton').textContent='Save changes 💙';$('cancelEdit').classList.remove('hidden');$('postStatus').textContent='Editing this postcard. Select another photo to replace the current one.';
-    $('admin').scrollIntoView({behavior:'smooth',block:'start'});
-   };
-   actions.append(edit);wrap.append(actions);
-  }
+  if(adult){const actions=document.createElement('div');actions.className='postcard-actions';const edit=document.createElement('button');edit.type='button';edit.textContent='✏️ Edit postcard';edit.onclick=()=>{editingPostcard=item.id;$('sender').value=['Utsy','Nana','Poppa'].includes(m.sender)?m.sender:'Utsy';$('messageText').value=m.text||'';$('postButton').textContent='Save changes 💙';$('cancelEdit').classList.remove('hidden');$('postStatus').textContent='Editing postcard';$('admin').scrollIntoView({behavior:'smooth',block:'start'});};actions.append(edit);wrap.append(actions);}
   el.append(wrap);
  });
 },()=>{$('messages').textContent='Messages unavailable. Check your Firebase permissions or connection.'});
+});
+let editingPostcard=null;
+function resetPostcardEditor(){editingPostcard=null;$('postForm').reset();$('postButton').textContent='Send postcard 💌';$('cancelEdit').classList.add('hidden');}
+$('cancelEdit').onclick=()=>{resetPostcardEditor();$('postStatus').textContent='Editing cancelled.';};
 $('postForm').onsubmit=async e=>{
  e.preventDefault();if(!currentUser||!ADULT_UIDS.includes(currentUser.uid))return;
  const btn=$('postButton');btn.disabled=true;$('postStatus').textContent=editingPostcard?'Saving changes…':'Sending postcard…';
- try{
-  const photoURL=await compressPostcardPhoto($('postImage').files?.[0]);
-  const data={sender:$('sender').value,text:$('messageText').value.trim(),photoURL};
-  if(!data.text)throw Error('Write a message first.');
-  if(editingPostcard){
-   await updateDoc(doc(db,'messages',editingPostcard),data);
-   $('postStatus').textContent='Postcard updated! 💙';
-  }else{
-   await addDoc(collection(db,'messages'),{...data,voiceURL:'',createdAt:serverTimestamp(),authorUid:currentUser.uid});
-   $('postStatus').textContent='Postcard sent! 💙';
-  }
-  resetPostcardEditor();
- }catch(err){$('postStatus').textContent='Could not save: '+err.message+' If Firebase says permission denied, the Firestore rules need to allow editing and the photo field.';}
- finally{btn.disabled=false;}
+ try{const data={sender:$('sender').value,text:$('messageText').value.trim()};if(!data.text)throw Error('Write a message first.');
+ if(editingPostcard){await updateDoc(doc(db,'messages',editingPostcard),data);$('postStatus').textContent='Postcard updated! 💙';}
+ else{await addDoc(collection(db,'messages'),{...data,photoURL:'',voiceURL:'',createdAt:serverTimestamp(),authorUid:currentUser.uid});$('postStatus').textContent='Postcard sent! 💙';}resetPostcardEditor();}
+ catch(err){$('postStatus').textContent='Could not save: '+err.message;}finally{btn.disabled=false;}
 };
-
 }
 boot().catch(e=>{$('loginError').textContent='App could not start. Check the Firebase setup and your internet connection.';console.error(e)});
 </script></body></html>
