@@ -32,18 +32,50 @@ jobs:
         run: python scripts/cruisemapper_position.py
       - name: Commit only new verified reports
         run: |
-          if [ -f ship-position.json ] && ! git diff --quiet -- ship-position.json; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ ! -f ship-position.json ]; then
+            echo "No position file."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Preserve our newly received report while updating the checkout.
+          cp ship-position.json "$RUNNER_TEMP/ship-position-candidate.json"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            # Do not replace an equal or newer verified AIS report.
+            python - <<'PY'
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+
+candidate = Path(__import__('os').environ['RUNNER_TEMP']) / 'ship-position-candidate.json'
+current = Path('ship-position.json')
+def reported(path):
+    try:
+        data = json.loads(path.read_text())
+        value = data.get('timestamp') or data.get('reportedAt')
+        return datetime.fromisoformat(value.replace('Z', '+00:00')) if value else datetime.min.replace(tzinfo=timezone.utc)
+    except (OSError, ValueError, TypeError, AttributeError):
+        return datetime.min.replace(tzinfo=timezone.utc)
+if reported(candidate) > reported(current):
+    current.write_bytes(candidate.read_bytes())
+    print('Applying newer verified AIS report.')
+else:
+    print('Latest repository AIS report is as new or newer; preserving it.')
+PY
+            if git diff --quiet -- ship-position.json && [ -n "$(git ls-files ship-position.json)" ]; then
+              echo "No newer AIS position to commit."
+              exit 0
+            fi
             git add ship-position.json
             git commit -m "Update verified Quantum AIS position"
-            git push
-          elif [ -f ship-position.json ] && [ -z "$(git ls-files ship-position.json)" ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add ship-position.json
-            git commit -m "Record first verified Quantum AIS position"
-            git push
-          else
-            echo "No new position."
-          fi
+            if git push origin HEAD:main; then
+              echo "Verified AIS position published."
+              exit 0
+            fi
+            echo "Repository changed during push; retrying ($attempt/3)."
+            sleep 2
+          done
+          echo "Repository changed repeatedly; a later scheduled run will retry."
+          exit 0
