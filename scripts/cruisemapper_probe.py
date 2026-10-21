@@ -23,17 +23,17 @@ except Exception as exc:
 
 print("Ship identity:", "Quantum" in html, "MMSI:", "311000267" in html)
 for key in ["latitude", "longitude", "lat", "lng", "lon", "position", "vesselfinder", "ais"]:
-    print("Occurrences", key, len(re.findall(r"(?i)\\b" + re.escape(key) + r"\\b", html)))
+    print("Occurrences", key, len(re.findall(r"(?i)\b" + re.escape(key) + r"\b", html)))
 # Inspect only short sanitized excerpts, not full page HTML or tokens.
 patterns = [
-    r'(?i)(?:latitude|longitude|lat|lng|lon)\\s*["\\\']?\\s*[:=]\\s*["\\\']?-?\\d{1,3}\\.\\d+',
-    r'(?i)(?:mmsi|imo)\\s*["\\\']?\\s*[:=]\\s*["\\\']?\\d{7,9}',
+    r'(?i)(?:latitude|longitude|lat|lng|lon)\s*["\\\']?\s*[:=]\s*["\\\']?-?\d{1,3}\.\d+',
+    r'(?i)(?:mmsi|imo)\s*["\\\']?\s*[:=]\s*["\\\']?\d{7,9}',
 ]
 for pattern in patterns:
     matches = list(re.finditer(pattern, html))
     print("Coordinate/identity candidate count:", len(matches))
     for match in matches[:12]:
         excerpt = unescape(html[max(0, match.start()-75):match.end()+75])
-        excerpt = re.sub(r"[\\r\\n\\t]+", " ", excerpt)
+        excerpt = re.sub(r"[\r\n\t]+", " ", excerpt)
         print("Candidate:", excerpt[:230])
 print("Diagnostic complete. No map data modified.")
