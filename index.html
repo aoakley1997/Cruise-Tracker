@@ -200,7 +200,7 @@ main{padding:12px 12px 44px!important}
 #cancelEdit{margin-left:10px;background:#eef4f8!important;color:#28536b!important}
 </style></head><body><header><div><h1>🚢 My Family at Sea</h1><div style="opacity:.9">Come along on our family ocean adventure! 🐬</div></div><nav class="hidden" id="topNav"><button id="logout">Sign out</button></nav></header><main><section class="card login" id="login"><h2>Welcome aboard! 🌊</h2><p>Sign in to follow the family adventure.</p><form id="loginForm"><label>Email</label><input autocomplete="username" id="email" required="" type="email"/><label>Password</label><input autocomplete="current-password" id="password" required="" type="password"/><button type="submit">Let's go! 🚢</button></form><p class="error" id="loginError" role="alert"></p><small>Accounts are created by a parent or guardian and the app administrator.</small></section><section class="hidden" id="app"><div class="card hero"><span class="pill" id="dayPill">🌟 Your family adventure</span><h2 id="heroTitle" style="font-size:30px;margin:12px 0">Where is our ship today? 🧭</h2><p class="muted" id="heroText"></p><div id="countdown"></div><div aria-hidden="true" class="hero-art">🚢<span>🐬</span></div></div><div class="grid"><section class="card story-map" aria-label="Our illustrated cruise journey">
  <div class="section-kicker">NORMAN'S ADVENTURE GUIDE</div>
- <div class="story-map-head"><div class="norman"><img src="./norman.svg?v=2" onerror="this.hidden=true;this.parentElement.textContent='🐒'" alt="Norman the monkey wearing sunglasses and a life jacket" loading="eager"/></div><div><h2>🗺️ Norman's Ocean Adventure!</h2><p class="muted">Ahoy! I'm Norman! Tap an island on our story map to discover something amazing! 🌴</p></div></div>
+ <div class="story-map-head"><div class="norman"><img src="./norman.svg?v=3" onerror="this.hidden=true;this.parentElement.textContent='🐒'" alt="Norman the monkey wearing sunglasses and a life jacket" loading="eager"/></div><div><h2>🗺️ Norman's Ocean Adventure!</h2><p class="muted">Ahoy! I'm Norman! Tap an island on our story map to discover something amazing! 🌴</p></div></div>
  <svg class="story-graphic" viewBox="0 0 900 510" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fun illustrated route from Brisbane to Port Vila, Mystery Island, Nouméa and back to Brisbane">
  <defs><linearGradient id="storybookSea" x2="1" y2="1"><stop stop-color="#d7f9ff"/><stop offset="1" stop-color="#92dce9"/></linearGradient></defs>
  <rect width="900" height="510" rx="20" fill="url(#storybookSea)"/>
@@ -261,7 +261,12 @@ const STORY_FACTS={
 };
 function initStoryMap(){
  document.querySelectorAll('[data-story]').forEach(node=>{
-  const show=()=>{const f=STORY_FACTS[node.dataset.story];if(!f)return;$('storyDetail').innerHTML='<strong>'+f.title+'</strong><p>'+f.fact+'</p>';};
+  const show=()=>{const key=node.dataset.story;const f=STORY_FACTS[key];if(!f)return;const extra={
+brisbane:['The Brisbane River winds through the city and out towards Moreton Bay.','Brisbane’s Story Bridge opened in 1940.','Koalas sleep for much of the day — often around 18 to 20 hours!'],
+vila:['Vanuatu has about 80 islands.','Bislama is one of Vanuatu’s official languages.','Some islands in Vanuatu have active volcanoes!'],
+mystery:['Mystery Island is also known as Inyeug.','Nobody lives permanently on Mystery Island.','You can find colourful tropical fish in the waters around Vanuatu!'],
+noumea:['Nouméa is the capital of New Caledonia.','New Caledonia is famous for its enormous lagoon.','Sea turtles live in New Caledonia’s beautiful lagoon waters!']};
+const n=Math.max(0,Math.floor((new Date(localDate()+'T12:00:00+10:00')-new Date('2026-10-22T12:00:00+10:00'))/86400000));const fact=extra[key][n%extra[key].length];$('storyDetail').replaceChildren();const h=document.createElement('strong');h.textContent='🐒 '+f.title+' — Today’s discovery!';const p=document.createElement('p');p.textContent=fact;$('storyDetail').append(h,p);};
   node.addEventListener('click',show);
   node.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();show();}});
  });
