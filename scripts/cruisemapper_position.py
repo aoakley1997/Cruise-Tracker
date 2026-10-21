@@ -44,6 +44,9 @@ def extract(page, fetched_at):
     speed_knots = float(speed_match.group(1)) if speed_match else None
     if speed_knots is not None and not (0 <= speed_knots <= 45):
         speed_knots = None
+    destination_match = re.search(r"en\s+route\s+to\s+([A-Z]{2,6})\b", readable, re.I)
+    destination_code = destination_match.group(1).upper() if destination_match else None
+    destination = {"BNE": "Brisbane", "VLI": "Port Vila", "NOU": "Nouméa"}.get(destination_code, destination_code)
     # Require the explicit AIS age text. Never use page-fetch time as report time.
     age = re.search(
         r"AIS\s+position\s+was\s+last\s+reported\s+"
@@ -67,6 +70,8 @@ def extract(page, fetched_at):
         "lon": lon,
         "speedKnots": speed_knots,
         "courseDegrees": None,
+        "destination": destination,
+        "destinationCode": destination_code,
         "reportedAt": observed.isoformat(timespec="seconds").replace("+00:00", "Z"),
         "source": "CruiseMapper (AIS; approximate timestamp)",
     }
@@ -114,6 +119,12 @@ def main():
                     old["speedReportedAt"] = result["reportedAt"]
                     OUT.write_text(json.dumps(old, indent=2) + "\n")
                     print("Filled missing speed without changing newer ship position:", old["speedKnots"])
+                    return
+                if same_place and time_gap <= 3600 and result.get("destination") and not old.get("destination"):
+                    old["destination"] = result["destination"]
+                    old["destinationCode"] = result["destinationCode"]
+                    OUT.write_text(json.dumps(old, indent=2) + "\n")
+                    print("Added AIS destination without changing position.")
                     return
                 print("Existing AIS position is newer; keeping it.")
                 return
