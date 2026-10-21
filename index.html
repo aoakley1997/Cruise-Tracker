@@ -312,6 +312,15 @@ function drawShip(p){
 }
 
 let lastAIS=null;
+function plannedDestination(){
+ const today=localDate();
+ const i=SAILING.findIndex(d=>d.date===today);
+ if(i<0)return today<SAILING[0].date?'Brisbane (departure)': 'Brisbane (returned)';
+ const current=SAILING[i];
+ if(current.name!=='At sea')return current.name+' (planned)';
+ const next=SAILING.slice(i+1).find(d=>d.name!=='At sea');
+ return next?next.name+' (next planned stop)':'Brisbane (return)';
+}
 async function refreshAIS(){
  try{
   const response=await fetch('./ship-position.json?t='+Date.now(),{cache:'no-store'});
@@ -320,10 +329,10 @@ async function refreshAIS(){
   const age=Date.now()-Date.parse(p.reportedAt);
   if(Number(p.mmsi)!==311000267||!Number.isFinite(p.lat)||!Number.isFinite(p.lon)||!Number.isFinite(age)||age < -300000)throw Error('Invalid report');
   lastAIS=p;
-  drawShip(p);$('shipSpeed').textContent=Number.isFinite(p.speedKnots)?p.speedKnots+' knots':'Not reported';$('shipCourse').textContent=p.destination||'Not reported';$('shipTime').textContent=new Date(p.reportedAt).toLocaleString('en-AU',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'});
+  drawShip(p);$('shipSpeed').textContent=Number.isFinite(p.speedKnots)?p.speedKnots+' knots':'Not reported';$('shipCourse').textContent=p.destination?.trim()||plannedDestination();$('shipTime').textContent=new Date(p.reportedAt).toLocaleString('en-AU',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'});
   $('mapStatus').textContent='📍 Last spotted here at '+new Date(p.reportedAt).toLocaleString('en-AU',{timeZone:'Australia/Brisbane',day:'numeric',month:'short',hour:'numeric',minute:'2-digit'})+' (Brisbane time).';
   updateWeather();
- }catch(e){lastAIS=null;$('mapStatus').textContent='Planned route only · no verified AIS position available yet.';$('shipSpeed').textContent='Awaiting AIS';$('shipCourse').textContent='—';$('shipTime').textContent='Not received';}
+ }catch(e){lastAIS=null;$('mapStatus').textContent='Planned route only · no verified AIS position available yet.';$('shipSpeed').textContent='Awaiting AIS';$('shipCourse').textContent=plannedDestination();$('shipTime').textContent='Not received';}
 }
 const weatherCode=c=>c===0?'☀️ Clear':c<=3?'⛅ Partly cloudy':c<=48?'🌫️ Foggy':c<=67?'🌧️ Rain':c<=77?'❄️ Snow':c<=82?'🌦️ Showers':c<=86?'🌨️ Snow showers':'⛈️ Thunderstorms';
 async function updateWeather(){const today=localDate();let idx=SAILING.findIndex(d=>d.date===today);if(idx<0)idx=today<SAILING[0].date?0:SAILING.length-1;let dest=SAILING[idx];if(lastAIS&&Date.now()-Date.parse(lastAIS.reportedAt)>=-300000&&Date.now()-Date.parse(lastAIS.reportedAt)<6*3600000)dest={name:'near ship (recent AIS coordinates)',lat:lastAIS.lat,lon:lastAIS.lon};if(dest.lat===null)dest=SAILING.slice(idx+1).find(x=>x.lat!==null)||SAILING.slice(0,idx).reverse().find(x=>x.lat!==null);if(!dest)return;try{const url=`https://api.open-meteo.com/v1/forecast?latitude=${dest.lat}&longitude=${dest.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&timezone=auto`;const res=await fetch(url);if(!res.ok)throw Error('Weather unavailable');const data=await res.json(),w=data.current;$('weather').innerHTML=`<div class="pill">${safe(dest.name)}</div><h2 style="font-size:36px;margin:12px 0">${Math.round(w.temperature_2m)}°C</h2><p>${weatherCode(w.weather_code)}</p><p>Feels like ${Math.round(w.apparent_temperature)}°C · Wind ${Math.round(w.wind_speed_10m)} km/h · Humidity ${w.relative_humidity_2m}%</p>`;$('weatherStatus').textContent=`Weather is approximate and may differ from conditions onboard.`;}catch(e){$('weather').textContent='Weather is temporarily unavailable. Try again when connected.';}}
