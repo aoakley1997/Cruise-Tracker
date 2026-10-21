@@ -1,13 +1,13 @@
 {
   "mmsi": 311000267,
-  "lat": -26.77542,
-  "lon": 154.60910833333332,
-  "speedKnots": 16.1,
+  "lat": -26.77477,
+  "lon": 154.58465,
+  "speedKnots": 16.7,
   "courseDegrees": null,
   "destination": "Brisbane",
   "destinationCode": "BNE",
-  "reportedAt": "2026-10-21T11:13:08Z",
+  "reportedAt": "2026-10-21T11:23:13Z",
   "source": "CruiseMapper (AIS; approximate timestamp)",
-  "lastKnownSpeedKnots": 18.4,
-  "lastKnownMotionAt": "2026-10-21T10:39:27Z"
+  "lastKnownSpeedKnots": 16.1,
+  "lastKnownMotionAt": "2026-10-21T11:13:08Z"
 }
