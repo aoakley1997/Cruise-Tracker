@@ -317,7 +317,7 @@ function plannedDestination(){
  const i=SAILING.findIndex(d=>d.date===today);
  if(i<0)return today<SAILING[0].date?'Brisbane (departure)': 'Brisbane (returned)';
  const current=SAILING[i];
- if(current.name!=='At sea')return current.name+' (planned)';
+ if(current.name!=='At sea')return current.name;
  const next=SAILING.slice(i+1).find(d=>d.name!=='At sea');
  return next?next.name+' (next planned stop)':'Brisbane (return)';
 }
