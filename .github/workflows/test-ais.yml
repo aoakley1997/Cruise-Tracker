@@ -12,6 +12,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: feature/automatic-ship-tracking
+      - name: Confirm tracking code version
+        run: |
+          echo "Tracking branch commit:"
+          git rev-parse --short HEAD
+          echo "Diagnostic lines in receiver:"
+          grep -n 'AIS messages received\|AIS WebSocket connected' scripts/ais_receiver.py
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -19,7 +25,7 @@ jobs:
       - name: Receive actual AIS reports (up to four minutes)
         env:
           AISSTREAM_API_KEY: ${{ secrets.AISSTREAM_API_KEY }}
-        run: python scripts/ais_receiver.py
+        run: python -u scripts/ais_receiver.py
       - name: Report results without publishing or changing live app
         run: |
           if [ -f ship-position.json ]; then
