@@ -44,12 +44,12 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
             # Do not replace an equal or newer verified AIS report.
-            python - <<'PY'
+          python - <<'PY'
           import json
           from datetime import datetime, timezone
           from pathlib import Path
-          
-          candidate = Path(__import__('os').environ['RUNNER_TEMP']) / 'ship-position-candidate.json'
+          import os
+          candidate = Path(os.environ['RUNNER_TEMP']) / 'ship-position-candidate.json'
           current = Path('ship-position.json')
           def reported(path):
               try:
