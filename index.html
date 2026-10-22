@@ -330,7 +330,7 @@ function plannedDestination(){
  const current=SAILING[i];
  if(current.name!=='At sea')return current.name;
  const next=SAILING.slice(i+1).find(d=>d.name!=='At sea');
- return next?next.name+' (next planned stop)':'Brisbane (return)';
+ return next?next.name:'Brisbane';
 }
 async function refreshAIS(){
  try{
