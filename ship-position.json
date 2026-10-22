@@ -6,9 +6,9 @@
   "courseDegrees": null,
   "destination": "PORT",
   "destinationCode": "PORT",
-  "reportedAt": "2026-10-22T17:20:16Z",
+  "reportedAt": "2026-10-22T17:24:00Z",
   "source": "CruiseMapper (AIS; approximate timestamp)",
-  "lastKnownSpeedKnots": 18.6,
+  "lastKnownSpeedKnots": 18.7,
   "lastKnownMotionAt": "2026-10-22T10:49:51Z",
   "lastKnownCourseDegrees": 77.6
 }
