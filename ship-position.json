@@ -1,14 +1,14 @@
 {
   "mmsi": 311000267,
-  "lat": -19.40298,
-  "lon": 162.31064,
+  "lat": -19.30331,
+  "lon": 162.41268,
   "speedKnots": 18.4,
   "courseDegrees": null,
   "destination": "PORT",
   "destinationCode": "PORT",
-  "reportedAt": "2026-10-23T22:48:18Z",
+  "reportedAt": "2026-10-23T23:09:03Z",
   "source": "CruiseMapper (AIS; approximate timestamp)",
-  "lastKnownSpeedKnots": 18.6,
+  "lastKnownSpeedKnots": 18.4,
   "lastKnownMotionAt": "2026-10-22T10:49:51Z",
   "lastKnownCourseDegrees": 77.6
 }
