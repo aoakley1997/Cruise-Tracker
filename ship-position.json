@@ -6,9 +6,9 @@
   "courseDegrees": null,
   "destination": "VUMYS",
   "destinationCode": "VUMYS",
-  "reportedAt": "2026-10-25T16:41:01Z",
+  "reportedAt": "2026-10-25T16:43:19Z",
   "source": "CruiseMapper (AIS; approximate timestamp)",
-  "lastKnownSpeedKnots": 13.1,
+  "lastKnownSpeedKnots": 14.0,
   "lastKnownMotionAt": "2026-10-22T10:49:51Z",
   "lastKnownCourseDegrees": 77.6
 }
