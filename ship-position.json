@@ -1,14 +1,14 @@
 {
   "mmsi": 311000267,
-  "lat": -18.2606,
-  "lon": 168.26818,
-  "speedKnots": 14.5,
+  "lat": -18.40633,
+  "lon": 168.32441,
+  "speedKnots": 14.3,
   "courseDegrees": null,
   "destination": "VUMYS",
   "destinationCode": "VUMYS",
-  "reportedAt": "2026-10-25T08:25:03Z",
+  "reportedAt": "2026-10-25T08:59:18Z",
   "source": "CruiseMapper (AIS; approximate timestamp)",
-  "lastKnownSpeedKnots": 14.7,
+  "lastKnownSpeedKnots": 14.5,
   "lastKnownMotionAt": "2026-10-22T10:49:51Z",
   "lastKnownCourseDegrees": 77.6
 }
