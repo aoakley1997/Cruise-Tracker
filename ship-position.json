@@ -6,9 +6,9 @@
   "courseDegrees": null,
   "destination": "NOUMEA",
   "destinationCode": "NOUMEA",
-  "reportedAt": "2026-10-26T23:01:19Z",
+  "reportedAt": "2026-10-26T23:17:01Z",
   "source": "CruiseMapper (AIS; approximate timestamp)",
   "lastKnownSpeedKnots": 0.0,
-  "lastKnownMotionAt": "2026-10-26T22:59:56Z",
+  "lastKnownMotionAt": "2026-10-26T23:08:55Z",
   "lastKnownCourseDegrees": 285.0
 }
