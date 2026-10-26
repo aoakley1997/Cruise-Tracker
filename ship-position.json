@@ -1,9 +1,9 @@
 {
   "mmsi": 311000267,
-  "lat": -22.27838,
-  "lon": 166.38911,
-  "speedKnots": 15.0,
-  "courseDegrees": 323.0,
-  "reportedAt": "2026-10-26T19:00:33Z",
+  "lat": -22.24604,
+  "lon": 166.39928,
+  "speedKnots": 10.0,
+  "courseDegrees": 115.0,
+  "reportedAt": "2026-10-26T19:16:00Z",
   "source": "MyShipTracking"
 }
