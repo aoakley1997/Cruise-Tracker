@@ -1,14 +1,14 @@
 {
   "mmsi": 311000267,
-  "lat": -21.78085,
-  "lon": 168.0736,
-  "speedKnots": 17.0,
+  "lat": -21.82153,
+  "lon": 168.00926,
+  "speedKnots": 17.7,
   "courseDegrees": null,
   "destination": "NOUMEA",
   "destinationCode": "NOUMEA",
-  "reportedAt": "2026-10-26T12:44:02Z",
+  "reportedAt": "2026-10-26T13:02:40Z",
   "source": "CruiseMapper (AIS; approximate timestamp)",
-  "lastKnownSpeedKnots": 16.8,
+  "lastKnownSpeedKnots": 17.0,
   "lastKnownMotionAt": "2026-10-22T10:49:51Z",
   "lastKnownCourseDegrees": 77.6
 }
