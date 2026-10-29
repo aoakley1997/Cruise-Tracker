@@ -6,9 +6,9 @@
   "courseDegrees": null,
   "destination": null,
   "destinationCode": null,
-  "reportedAt": "2026-10-29T04:05:01Z",
+  "reportedAt": "2026-10-29T04:07:19Z",
   "source": "CruiseMapper (AIS; approximate timestamp)",
-  "lastKnownSpeedKnots": 13.0,
+  "lastKnownSpeedKnots": 12.1,
   "lastKnownMotionAt": "2026-10-27T02:44:58Z",
   "lastKnownCourseDegrees": 284.0
 }
