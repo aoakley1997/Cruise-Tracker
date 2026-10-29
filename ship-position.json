@@ -2,8 +2,13 @@
   "mmsi": 311000267,
   "lat": -27.38161,
   "lon": 153.15634,
-  "speedKnots": 0.0,
-  "courseDegrees": 238.0,
-  "reportedAt": "2026-10-29T21:50:09Z",
-  "source": "MyShipTracking"
+  "speedKnots": null,
+  "courseDegrees": null,
+  "destination": null,
+  "destinationCode": null,
+  "reportedAt": "2026-10-29T22:02:20Z",
+  "source": "CruiseMapper (AIS; approximate timestamp)",
+  "lastKnownSpeedKnots": 0.0,
+  "lastKnownMotionAt": "2026-10-29T22:02:09Z",
+  "lastKnownCourseDegrees": 238.0
 }
