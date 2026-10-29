@@ -1,14 +1,14 @@
 {
   "mmsi": 311000267,
-  "lat": -26.60826,
-  "lon": 153.69141,
-  "speedKnots": 11.6,
+  "lat": -26.63357,
+  "lon": 153.62566,
+  "speedKnots": 11.8,
   "courseDegrees": null,
   "destination": null,
   "destinationCode": null,
-  "reportedAt": "2026-10-29T13:46:02Z",
+  "reportedAt": "2026-10-29T13:59:27Z",
   "source": "CruiseMapper (AIS; approximate timestamp)",
-  "lastKnownSpeedKnots": 10.9,
+  "lastKnownSpeedKnots": 11.6,
   "lastKnownMotionAt": "2026-10-27T02:44:58Z",
   "lastKnownCourseDegrees": 284.0
 }
