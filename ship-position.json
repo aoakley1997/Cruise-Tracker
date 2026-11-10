@@ -1,14 +1,14 @@
 {
   "mmsi": 311000267,
-  "lat": -21.44264,
-  "lon": 150.36138,
-  "speedKnots": 13.7,
+  "lat": -20.41096,
+  "lon": 148.93324833333332,
+  "speedKnots": 12.0,
   "courseDegrees": null,
   "destination": "AIRLIE",
   "destinationCode": "AIRLIE",
-  "reportedAt": "2026-11-10T11:38:04Z",
+  "reportedAt": "2026-11-10T19:37:15Z",
   "source": "CruiseMapper (AIS; approximate timestamp)",
-  "lastKnownSpeedKnots": 14.0,
+  "lastKnownSpeedKnots": 13.7,
   "lastKnownMotionAt": "2026-10-30T11:27:36Z",
   "lastKnownCourseDegrees": 56.9
 }
