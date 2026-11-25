@@ -1,14 +1,14 @@
 {
   "mmsi": 311000267,
-  "lat": -18.82312,
-  "lon": 151.57995,
-  "speedKnots": 14.4,
+  "lat": -21.57547,
+  "lon": 153.1088,
+  "speedKnots": 11.5,
   "courseDegrees": null,
-  "destination": "WILLIS",
-  "destinationCode": "WILLIS",
-  "reportedAt": "2026-11-24T18:38:53Z",
+  "destination": null,
+  "destinationCode": null,
+  "reportedAt": "2026-11-25T12:32:10Z",
   "source": "CruiseMapper (AIS; approximate timestamp)",
-  "lastKnownSpeedKnots": 13.8,
+  "lastKnownSpeedKnots": 14.4,
   "lastKnownMotionAt": "2026-10-30T11:27:36Z",
   "lastKnownCourseDegrees": 56.9
 }
